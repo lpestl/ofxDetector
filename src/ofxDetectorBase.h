@@ -10,6 +10,7 @@ class ofxDetectorBase
 		virtual void draw(int x, int y, int w, int h);
 
 		virtual void setThreshold(unsigned char threshold);
+		ofxCvGrayscaleImage getGreyImage();
 
 	protected:
 		ofxCvGrayscaleImage 	gray_image_;

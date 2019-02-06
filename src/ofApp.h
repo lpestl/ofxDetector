@@ -1,8 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxDetector.h"
-#include "ofxDetectorBase.h"
+#include "ofxMotionDetector.h"
 
 class ofApp : public ofBaseApp{
 
@@ -25,6 +24,5 @@ class ofApp : public ofBaseApp{
 		
 		ofVideoGrabber 			cam_grabber_;
 		ofxCvColorImage			frame_;
-		ofxDetector detector;
-		ofxDetectorBase base_detector_;
+		ofxMotionDetector		motion_detector_;
 };

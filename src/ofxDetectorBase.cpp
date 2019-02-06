@@ -23,3 +23,8 @@ void ofxDetectorBase::setThreshold(unsigned char threshold)
 {
 	threshold_ = threshold;
 }
+
+ofxCvGrayscaleImage ofxDetectorBase::getGreyImage()
+{
+	return gray_image_;
+}

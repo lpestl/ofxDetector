@@ -24,7 +24,7 @@ void ofApp::setup(){
 	cam_grabber_.setup(w, h);
 	frame_.allocate(w, h);
 
-	base_detector_.setup(w, h, 80);
+	motion_detector_.setup(w, h, 50, 1);
 }
 
 //--------------------------------------------------------------
@@ -35,7 +35,7 @@ void ofApp::update(){
 	{
 		frame_.setFromPixels(cam_grabber_.getPixels());
 
-		base_detector_.update(frame_);
+		motion_detector_.update(frame_);
 	}
 }
 
@@ -43,12 +43,12 @@ void ofApp::update(){
 void ofApp::draw(){
 	ofBackgroundGradient(ofColor::lightBlue, ofColor::blue);
 
-	base_detector_.draw(25, 25, 960, 720);
+	motion_detector_.draw(25, 25, 960, 720);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	//detector.keyPressed(key);
+
 }
 
 //--------------------------------------------------------------

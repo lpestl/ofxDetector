@@ -64,6 +64,9 @@
     <ClCompile Include="src\ofxDetectorBase.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\ofxMotionDetector.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -1290,6 +1293,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\ofxDetectorBase.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ofxMotionDetector.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
