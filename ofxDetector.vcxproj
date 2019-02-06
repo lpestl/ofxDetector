@@ -200,6 +200,7 @@
     <ClCompile Include="..\..\openFrameworks\addons\ofxOpenCv\src\ofxCvImage.cpp" />
     <ClCompile Include="..\..\openFrameworks\addons\ofxOpenCv\src\ofxCvShortImage.cpp" />
     <ClCompile Include="src\ofxDetector.cpp" />
+    <ClCompile Include="src\ofxDetectorBase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h" />
@@ -555,6 +556,7 @@
     <ClInclude Include="..\..\openFrameworks\addons\ofxOpenCv\libs\opencv\include\opencv2\viz.hpp" />
     <ClInclude Include="..\..\openFrameworks\addons\ofxOpenCv\libs\opencv\include\opencv2\world.hpp" />
     <ClInclude Include="src\ofxDetector.h" />
+    <ClInclude Include="src\ofxDetectorBase.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">

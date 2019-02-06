@@ -2,22 +2,22 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	detector.setup();
+	//detector.setup();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	detector.update();
+	//detector.update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	detector.draw();
+	//detector.draw();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	detector.keyPressed(key);
+	//detector.keyPressed(key);
 }
 
 //--------------------------------------------------------------

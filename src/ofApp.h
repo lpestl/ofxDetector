@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxDetector.h"
+#include "ofxDetectorBase.h"
 
 class ofApp : public ofBaseApp{
 
@@ -23,4 +24,5 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 		
 		ofxDetector detector;
+		ofxDetectorBase base_detector_;
 };

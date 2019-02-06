@@ -1,6 +1,8 @@
-#include "ofxOpenCv.h"
-
 #pragma once
+
+#include "ofxOpenCv.h"
+#include "ofxGui.h"
+
 class ofxDetector
 {
 	public:
@@ -32,5 +34,7 @@ class ofxDetector
 
 		int 					threshold;
 		bool					bLearnBakground;
+
+		ofxPanel				detector_settings_;
 };
 
