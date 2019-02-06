@@ -23,6 +23,8 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		
+		ofVideoGrabber 			cam_grabber_;
+		ofxCvColorImage			frame_;
 		ofxDetector detector;
 		ofxDetectorBase base_detector_;
 };

@@ -2,17 +2,48 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	//detector.setup();
+	//get back a list of devices.
+	vector<ofVideoDevice> devices = cam_grabber_.listDevices();
+
+	for (size_t i = 0; i < devices.size(); i++) {
+		if (devices[i].bAvailable) {
+			//log the device
+			ofLogNotice() << devices[i].id << ": " << devices[i].deviceName;
+		}
+		else {
+			//log the device and note it as unavailable
+			ofLogNotice() << devices[i].id << ": " << devices[i].deviceName << " - unavailable ";
+		}
+	}
+
+	cam_grabber_.setDeviceID(0);
+	cam_grabber_.setDesiredFrameRate(60);
+
+	auto w = 960;
+	auto h = 720;
+	cam_grabber_.setup(w, h);
+	frame_.allocate(w, h);
+
+	base_detector_.setup(w, h, 80);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	//detector.update();
+	cam_grabber_.update();
+
+	if (cam_grabber_.isFrameNew())
+	{
+		frame_.setFromPixels(cam_grabber_.getPixels());
+
+		base_detector_.update(frame_);
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	//detector.draw();
+	ofBackgroundGradient(ofColor::lightBlue, ofColor::blue);
+
+	base_detector_.draw(25, 25, 960, 720);
 }
 
 //--------------------------------------------------------------
