@@ -9,13 +9,15 @@ class ofxDetectorBase
 		virtual void update(ofxCvColorImage color_frame);
 		virtual void draw(int x, int y, int w, int h);
 
-		virtual void setThreshold(unsigned char threshold);
-		ofxCvGrayscaleImage getGreyImage();
+		void setThreshold(unsigned char threshold);
+		unsigned char getThreshold() const;
+
+		ofxCvGrayscaleImage getGreyImage() const;
 
 	protected:
 		ofxCvGrayscaleImage 	gray_image_;
 		ofxCvGrayscaleImage 	gray_diff_image_;
 
-		unsigned char			threshold_;
+		unsigned char			threshold_ = 80;
 };
 

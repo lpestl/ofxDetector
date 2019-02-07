@@ -24,7 +24,7 @@ void ofApp::setup(){
 	cam_grabber_.setup(w, h);
 	frame_.allocate(w, h);
 
-	motion_detector_.setup(w, h, 50, 1);
+	motion_detector_.setup(w, h, 50, 3);
 }
 
 //--------------------------------------------------------------
