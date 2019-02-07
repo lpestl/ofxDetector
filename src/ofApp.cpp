@@ -24,7 +24,7 @@ void ofApp::setup(){
 	cam_grabber_.setup(w, h);
 	frame_.allocate(w, h);
 
-	motion_detector_.setup(w, h, 50, 3);
+	motion_detector_.setup(w, h, 50, 5);
 }
 
 //--------------------------------------------------------------
@@ -43,7 +43,40 @@ void ofApp::update(){
 void ofApp::draw(){
 	ofBackgroundGradient(ofColor::lightBlue, ofColor::blue);
 
-	motion_detector_.draw(25, 25, 960, 720);
+	frame_.draw(10, 10, 320, 240);
+
+	std::queue<ofxCvGrayscaleImage> frames = motion_detector_.frames_;
+	for (size_t i = 0; i < motion_detector_.frames_.size(); i++)
+	{
+		frames.front().draw(340 + i * 330, 10, 320, 240);
+		frames.pop();
+	}
+
+	std::queue<ofxCvGrayscaleImage> frames_diff = motion_detector_.frames_diffs_;
+	if (!frames_diff.empty()) {
+		auto common_diff = frames_diff.front();
+		for (size_t i = 0; i < motion_detector_.frames_diffs_.size(); i++)
+		{
+			auto curr_diff = frames_diff.front();
+			curr_diff.draw(340 + i * 330, 260, 320, 240);
+			common_diff.absDiff(common_diff, curr_diff);
+			frames_diff.pop();
+		}
+		common_diff.draw(10, 260, 320, 240);
+	}
+	
+	std::queue<ofxCvGrayscaleImage> frames_th = motion_detector_.frames_threshold_;
+	if (!frames_th.empty()) {
+		auto common_th = frames_th.front();
+		for (size_t i = 0; i < motion_detector_.frames_threshold_.size(); i++)
+		{
+			auto curr_th = frames_th.front();
+			curr_th.draw(340 + i * 330, 510, 320, 240);
+			common_th.absDiff(common_th, curr_th);
+			frames_th.pop();
+		}
+		common_th.draw(10, 510, 320, 240);
+	}
 }
 
 //--------------------------------------------------------------

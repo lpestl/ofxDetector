@@ -14,10 +14,10 @@ class ofxMotionDetector : public ofxDetectorBase
 		void setNumberFramesRemembered(unsigned short num);
 		unsigned short getNumberFramesRememberes() const;
 
-	private:
-		ofxCvGrayscaleImage result_image_;
-		unsigned short number_frames_remembered_;
+	//private:
+		unsigned short number_frames_remembered_ = 1;
 
+		ofxCvGrayscaleImage working_frame_;
 		std::queue<ofxCvGrayscaleImage> frames_;
 		std::queue<ofxCvGrayscaleImage> frames_diffs_;
 		std::queue<ofxCvGrayscaleImage> frames_threshold_;

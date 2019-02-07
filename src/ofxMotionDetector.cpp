@@ -8,9 +8,9 @@ void ofxMotionDetector::setup(unsigned width_image, unsigned height_image, unsig
 void ofxMotionDetector::setup(unsigned width_image, unsigned height_image, unsigned char threshold, unsigned short number_frames_remembered)
 {
 	ofxDetectorBase::setup(width_image, height_image, threshold);
-
+	number_frames_remembered_ = number_frames_remembered;
 	//last_frame_.allocate(width_image, height_image);
-	result_image_.allocate(width_image, height_image);
+	working_frame_.allocate(width_image, height_image);
 
 	//last_frames_diffs_.resize(count_remember_frames);
 	/*for (auto& frame : last_frames_diffs_)
@@ -21,7 +21,25 @@ void ofxMotionDetector::setup(unsigned width_image, unsigned height_image, unsig
 
 void ofxMotionDetector::update(ofxCvColorImage color_frame)
 {
-	//ofxDetectorBase::update(color_frame);
+	ofxDetectorBase::update(color_frame);
+	if (!frames_.empty())
+	{
+		working_frame_.absDiff(gray_image_, frames_.back());
+		
+		frames_diffs_.push(working_frame_);
+		if (frames_diffs_.size() > number_frames_remembered_)
+			frames_diffs_.pop();
+
+		working_frame_.threshold(threshold_);
+		frames_threshold_.push(working_frame_);
+		if (frames_threshold_.size() > number_frames_remembered_)
+			frames_threshold_.pop();
+	}
+
+	frames_.push(gray_image_);
+	if (frames_.size() > number_frames_remembered_)
+		frames_.pop();
+
 	//for (size_t i = last_frames_diffs_.size() - 1; i > 0; --i)
 	//{
 	//	last_frames_diffs_[i] = last_frames_diffs_[i - 1];
@@ -55,7 +73,7 @@ void ofxMotionDetector::update(ofxCvColorImage color_frame)
 void ofxMotionDetector::draw(int x, int y, int w, int h)
 {
 	ofSetHexColor(0xffffff);
-	result_image_.draw(x, y, w, h);
+	//result_image_.draw(x, y, w, h);
 }
 
 void ofxMotionDetector::setNumberFramesRemembered(unsigned short num)

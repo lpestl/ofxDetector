@@ -16,7 +16,6 @@ class ofxDetectorBase
 
 	protected:
 		ofxCvGrayscaleImage 	gray_image_;
-		ofxCvGrayscaleImage 	gray_diff_image_;
 
 		unsigned char			threshold_ = 80;
 };

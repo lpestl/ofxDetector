@@ -3,7 +3,6 @@
 void ofxDetectorBase::setup(unsigned width_image, unsigned height_image, unsigned char threshold)
 {
 	gray_image_.allocate(width_image, height_image);
-	gray_diff_image_.allocate(width_image, height_image);
 
 	threshold_ = threshold;
 }
