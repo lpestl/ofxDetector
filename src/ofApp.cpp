@@ -98,23 +98,33 @@ void ofApp::draw(){
 		common_th.draw(10, 510, 320, 240);
 	}
 
-	/*std::queue<ofxCvGrayscaleImage> frames_th2 = motion_detector_.frames_threshold_;
-	if (!frames_th2.empty()) {
-		auto common_th = frames_th2.front();
-		frames_th2.pop();
-		for (size_t i = 0; i < motion_detector_.frames_threshold_.size() - 1; i++)
-		{
-			auto curr_th = frames_th2.front();
-			
-			IplImage *dst = cvCreateImage(CvSize(common_th.width, common_th.height), common_th.getCvImage()->depth, common_th.getCvImage()->nChannels);
+	std::vector<ofxCvGrayscaleImage> diffs;
+	std::queue<ofxCvGrayscaleImage> frames_calc = motion_detector_.frames_;
+	
+	if (!frames_calc.empty()) {
+		auto result = frames_calc.front();
+		frames_calc.pop();
 
-			cvMax(common_th.getCvImage(), curr_th.getCvImage(), dst);
-			common_th = dst;
-			
-			frames_th2.pop();
+		for (size_t i = 0; i < motion_detector_.frames_.size() - 1; i++)
+		{
+			ofxCvGrayscaleImage diff = result;
+			diff.absDiff(frames_calc.front());
+			frames_calc.pop();
+			diffs.push_back(diff);
 		}
-		common_th.draw(10, 760, 320, 240);
-	}*/
+
+		if (!diffs.empty())
+		{
+			result = diffs.front();
+			for (auto&& diff : diffs)
+			{
+				result.maxCustom(diff);
+			}
+
+			result.threshold(motion_detector_.getThreshold());
+			result.draw(10, 760, 320, 240);
+		}
+	}
 
 	settings_panel_.draw();
 }

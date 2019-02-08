@@ -19,6 +19,59 @@ void ofxMotionDetector::setup(unsigned width_image, unsigned height_image, unsig
 	}*/
 }
 
+// WARNING: ofxOpenCv not contain ofxCvGrayscaleImage::max(...) method. 
+// Its my temporary realization.
+//void ofxCvGrayscaleImage::max(ofxCvGrayscaleImage& mom)
+//{
+//	if (!mom.bAllocated) {
+//		ofLogError("ofxCvGrayscaleImage") << "max(): source image not allocated";
+//		return;
+//	}
+//	if (!bAllocated) {
+//		ofLogNotice("ofxCvGrayscaleImage") << "max(): allocating to match dimensions: "
+//			<< mom.getWidth() << " " << mom.getHeight();
+//		allocate(mom.getWidth(), mom.getHeight());
+//	}
+//
+//	if (matchingROI(getROI(), mom.getROI())) {
+//		cvMax(cvImage, mom.getCvImage(), cvImageTemp);
+//		swapTemp();
+//		flagImageChanged();
+//	}
+//	else {
+//		ofLogError("ofxCvGrayscaleImage") << "max(): region of interest mismatch";
+//	}
+//}
+//
+//void ofxCvGrayscaleImage::max(ofxCvGrayscaleImage& mom, ofxCvGrayscaleImage& dad)
+//{
+//	if (!mom.bAllocated) {
+//		ofLogError("ofxCvGrayscaleImage") << "max(): first source image (mom) not allocated";
+//		return;
+//	}
+//	if (!dad.bAllocated) {
+//		ofLogError("ofxCvGrayscaleImage") << "max(): second source image (dad) not allocated";
+//		return;
+//	}
+//	if (!bAllocated) {
+//		ofLogNotice("ofxCvGrayscaleImage") << "max(): allocating to match dimensions: "
+//			<< mom.getWidth() << " " << mom.getHeight();
+//		allocate(mom.getWidth(), mom.getHeight());
+//	}
+//
+//	ofRectangle roi = getROI();
+//	ofRectangle momRoi = mom.getROI();
+//	ofRectangle dadRoi = dad.getROI();
+//	if ((momRoi.width == roi.width && momRoi.height == roi.height) &&
+//		(dadRoi.width == roi.width && dadRoi.height == roi.height))
+//	{
+//		cvMax(mom.getCvImage(), dad.getCvImage(), cvImage);
+//		flagImageChanged();
+//	}
+//	else {
+//		ofLogError("ofxCvGrayscaleImage") << "max(): source image size mismatch between first (mom) & second (dad) image";
+//	}
+//}
 void ofxMotionDetector::update(ofxCvColorImage color_frame)
 {
 	ofxDetectorBase::update(color_frame);
