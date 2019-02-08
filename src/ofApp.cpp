@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "cuda_perf.hpp"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -76,7 +77,7 @@ void ofApp::draw(){
 		{
 			auto curr_diff = frames_diff.front();
 			curr_diff.draw(340 + 330 + i * 330, 260, 320, 240);
-			common_diff.absDiff(common_diff, curr_diff);
+			common_diff.absDiff(curr_diff);
 			frames_diff.pop();
 		}
 		common_diff.draw(10, 260, 320, 240);
@@ -91,11 +92,29 @@ void ofApp::draw(){
 		{
 			auto curr_th = frames_th.front();
 			curr_th.draw(340 + 330 + i * 330, 510, 320, 240);
-			common_th.absDiff(common_th, curr_th);
+			common_th.absDiff(curr_th);
 			frames_th.pop();
 		}
 		common_th.draw(10, 510, 320, 240);
 	}
+
+	/*std::queue<ofxCvGrayscaleImage> frames_th2 = motion_detector_.frames_threshold_;
+	if (!frames_th2.empty()) {
+		auto common_th = frames_th2.front();
+		frames_th2.pop();
+		for (size_t i = 0; i < motion_detector_.frames_threshold_.size() - 1; i++)
+		{
+			auto curr_th = frames_th2.front();
+			
+			IplImage *dst = cvCreateImage(CvSize(common_th.width, common_th.height), common_th.getCvImage()->depth, common_th.getCvImage()->nChannels);
+
+			cvMax(common_th.getCvImage(), curr_th.getCvImage(), dst);
+			common_th = dst;
+			
+			frames_th2.pop();
+		}
+		common_th.draw(10, 760, 320, 240);
+	}*/
 
 	settings_panel_.draw();
 }

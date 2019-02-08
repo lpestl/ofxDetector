@@ -22,6 +22,7 @@ void ofxMotionDetector::setup(unsigned width_image, unsigned height_image, unsig
 void ofxMotionDetector::update(ofxCvColorImage color_frame)
 {
 	ofxDetectorBase::update(color_frame);
+
 	if (!frames_.empty())
 	{
 		working_frame_.absDiff(gray_image_, frames_.back());
