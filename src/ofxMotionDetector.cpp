@@ -27,17 +27,17 @@ void ofxMotionDetector::update(ofxCvColorImage color_frame)
 		working_frame_.absDiff(gray_image_, frames_.back());
 		
 		frames_diffs_.push(working_frame_);
-		if (frames_diffs_.size() > number_frames_remembered_)
+		while (frames_diffs_.size() > number_frames_remembered_)
 			frames_diffs_.pop();
 
 		working_frame_.threshold(threshold_);
 		frames_threshold_.push(working_frame_);
-		if (frames_threshold_.size() > number_frames_remembered_)
+		while (frames_threshold_.size() > number_frames_remembered_)
 			frames_threshold_.pop();
 	}
 
 	frames_.push(gray_image_);
-	if (frames_.size() > number_frames_remembered_)
+	while (frames_.size() > number_frames_remembered_)
 		frames_.pop();
 
 	//for (size_t i = last_frames_diffs_.size() - 1; i > 0; --i)

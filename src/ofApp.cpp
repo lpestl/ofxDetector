@@ -25,6 +25,13 @@ void ofApp::setup(){
 	frame_.allocate(w, h);
 
 	motion_detector_.setup(w, h, 50, 5);
+
+	threshold_slider_.addListener(this, &ofApp::thresholdChanged);
+	count_frames_.addListener(this, &ofApp::countFramesChanged);
+
+	settings_panel_.setup("MotionDetectorSettings");
+	settings_panel_.add(threshold_slider_.setup("threshold_motion", 80, 0, 255));
+	settings_panel_.add(count_frames_.setup("number_of_frames", 1, 1, 10));
 }
 
 //--------------------------------------------------------------
@@ -43,9 +50,17 @@ void ofApp::update(){
 void ofApp::draw(){
 	ofBackgroundGradient(ofColor::lightBlue, ofColor::blue);
 
+	ofSetHexColor(0xAAAA00);
+	ofDrawRectangle(5, 5, 330, 750);
+
+	ofSetHexColor(0xFF0000);
+	ofDrawRectangle(5, 755, ofGetWindowWidth() - 10, ofGetWindowHeight() - 760);
+
+	ofSetHexColor(0xFFFFFF);
 	frame_.draw(10, 10, 320, 240);
 
 	std::queue<ofxCvGrayscaleImage> frames = motion_detector_.frames_;
+	//ofxCvGrayscaleImage 
 	for (size_t i = 0; i < motion_detector_.frames_.size(); i++)
 	{
 		frames.front().draw(340 + i * 330, 10, 320, 240);
@@ -55,10 +70,12 @@ void ofApp::draw(){
 	std::queue<ofxCvGrayscaleImage> frames_diff = motion_detector_.frames_diffs_;
 	if (!frames_diff.empty()) {
 		auto common_diff = frames_diff.front();
-		for (size_t i = 0; i < motion_detector_.frames_diffs_.size(); i++)
+		common_diff.draw(340, 260, 320, 240);
+		frames_diff.pop();
+		for (size_t i = 0; i < motion_detector_.frames_diffs_.size() - 1; i++)
 		{
 			auto curr_diff = frames_diff.front();
-			curr_diff.draw(340 + i * 330, 260, 320, 240);
+			curr_diff.draw(340 + 330 + i * 330, 260, 320, 240);
 			common_diff.absDiff(common_diff, curr_diff);
 			frames_diff.pop();
 		}
@@ -68,15 +85,25 @@ void ofApp::draw(){
 	std::queue<ofxCvGrayscaleImage> frames_th = motion_detector_.frames_threshold_;
 	if (!frames_th.empty()) {
 		auto common_th = frames_th.front();
-		for (size_t i = 0; i < motion_detector_.frames_threshold_.size(); i++)
+		common_th.draw(340, 510, 320, 240);
+		frames_th.pop();
+		for (size_t i = 0; i < motion_detector_.frames_threshold_.size() - 1; i++)
 		{
 			auto curr_th = frames_th.front();
-			curr_th.draw(340 + i * 330, 510, 320, 240);
+			curr_th.draw(340 + 330 + i * 330, 510, 320, 240);
 			common_th.absDiff(common_th, curr_th);
 			frames_th.pop();
 		}
 		common_th.draw(10, 510, 320, 240);
 	}
+
+	settings_panel_.draw();
+}
+
+void ofApp::exit()
+{
+	threshold_slider_.removeListener(this, &ofApp::thresholdChanged);
+	count_frames_.removeListener(this, &ofApp::countFramesChanged);
 }
 
 //--------------------------------------------------------------
@@ -127,6 +154,16 @@ void ofApp::windowResized(int w, int h){
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg){
 
+}
+
+void ofApp::thresholdChanged(int& threshold)
+{
+	motion_detector_.setThreshold(threshold);
+}
+
+void ofApp::countFramesChanged(int& countFrame)
+{
+	motion_detector_.setNumberFramesRemembered(countFrame);
 }
 
 //--------------------------------------------------------------
