@@ -7,6 +7,21 @@
 		<ClCompile Include="src\main.cpp">
 			<Filter>src</Filter>
 		</ClCompile>
+		<ClCompile Include="src\main.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\ofApp.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\ofxDetector.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\ofxDetectorBase.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\ofxMotionDetector.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
 		<ClCompile Include="..\..\openFrameworks\addons\ofxGui\src\ofxBaseGui.cpp">
 			<Filter>addons\ofxGui\src</Filter>
 		</ClCompile>
@@ -225,6 +240,18 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ClInclude Include="src\ofApp.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\ofApp.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\ofxDetector.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\ofxDetectorBase.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\ofxMotionDetector.h">
 			<Filter>src</Filter>
 		</ClInclude>
 		<ClInclude Include="..\..\openFrameworks\addons\ofxGui\src\ofxBaseGui.h">
