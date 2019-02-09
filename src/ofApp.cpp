@@ -50,81 +50,14 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 	ofBackgroundGradient(ofColor::lightBlue, ofColor::blue);
-
+/*
 	ofSetHexColor(0xAAAA00);
-	ofDrawRectangle(5, 5, 330, 750);
-
-	ofSetHexColor(0xFF0000);
-	ofDrawRectangle(5, 755, ofGetWindowWidth() - 10, ofGetWindowHeight() - 760);
+	ofDrawRectangle(5, 5, 330, 750);*/
 
 	ofSetHexColor(0xFFFFFF);
-	frame_.draw(10, 10, 320, 240);
+	frame_.draw(10, 10, 640, 480);
 
-	std::queue<ofxCvGrayscaleImage> frames = motion_detector_.frames_;
-	//ofxCvGrayscaleImage 
-	for (size_t i = 0; i < motion_detector_.frames_.size(); i++)
-	{
-		frames.front().draw(340 + i * 330, 10, 320, 240);
-		frames.pop();
-	}
-
-	std::queue<ofxCvGrayscaleImage> frames_diff = motion_detector_.frames_diffs_;
-	if (!frames_diff.empty()) {
-		auto common_diff = frames_diff.front();
-		common_diff.draw(340, 260, 320, 240);
-		frames_diff.pop();
-		for (size_t i = 0; i < motion_detector_.frames_diffs_.size() - 1; i++)
-		{
-			auto curr_diff = frames_diff.front();
-			curr_diff.draw(340 + 330 + i * 330, 260, 320, 240);
-			common_diff.absDiff(curr_diff);
-			frames_diff.pop();
-		}
-		common_diff.draw(10, 260, 320, 240);
-	}
-	
-	std::queue<ofxCvGrayscaleImage> frames_th = motion_detector_.frames_threshold_;
-	if (!frames_th.empty()) {
-		auto common_th = frames_th.front();
-		common_th.draw(340, 510, 320, 240);
-		frames_th.pop();
-		for (size_t i = 0; i < motion_detector_.frames_threshold_.size() - 1; i++)
-		{
-			auto curr_th = frames_th.front();
-			curr_th.draw(340 + 330 + i * 330, 510, 320, 240);
-			common_th.absDiff(curr_th);
-			frames_th.pop();
-		}
-		common_th.draw(10, 510, 320, 240);
-	}
-
-	std::vector<ofxCvGrayscaleImage> diffs;
-	std::queue<ofxCvGrayscaleImage> frames_calc = motion_detector_.frames_;
-	
-	if (!frames_calc.empty()) {
-		auto result = frames_calc.front();
-		frames_calc.pop();
-
-		for (size_t i = 0; i < motion_detector_.frames_.size() - 1; i++)
-		{
-			ofxCvGrayscaleImage diff = result;
-			diff.absDiff(frames_calc.front());
-			frames_calc.pop();
-			diffs.push_back(diff);
-		}
-
-		if (!diffs.empty())
-		{
-			result = diffs.front();
-			for (auto&& diff : diffs)
-			{
-				result.maxCustom(diff);
-			}
-
-			result.threshold(motion_detector_.getThreshold());
-			result.draw(10, 760, 320, 240);
-		}
-	}
+	motion_detector_.draw(660, 10, 640, 480);
 
 	settings_panel_.draw();
 }
