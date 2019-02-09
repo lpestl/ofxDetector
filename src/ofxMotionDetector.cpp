@@ -82,13 +82,14 @@ void ofxMotionDetector::update(ofxCvColorImage color_frame)
 			frames_calc.pop();
 
 			frame_diff.absDiff(frame);
-			frame_diff.threshold(threshold_);
 
 			if (i == 0)
 				result_image_ = frame_diff;
 			else
 				result_image_.maxCustom(frame_diff);
 		}
+
+		result_image_.threshold(threshold_);
 	}
 
 	frames_.push(gray_image_);
