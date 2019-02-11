@@ -50,9 +50,6 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 	ofBackgroundGradient(ofColor::lightBlue, ofColor::blue);
-/*
-	ofSetHexColor(0xAAAA00);
-	ofDrawRectangle(5, 5, 330, 750);*/
 
 	ofSetHexColor(0xFFFFFF);
 	frame_.draw(10, 10, 640, 480);
