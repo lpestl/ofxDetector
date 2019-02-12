@@ -12,7 +12,7 @@ public:
 	void setBackgroundImage(ofxCvGrayscaleImage bg_image);
 	ofxCvGrayscaleImage getBackgroungImage() const;
 
-//private:
+private:
 	ofxCvGrayscaleImage background_;
 	ofxCvGrayscaleImage working_image_;
 	ofxCvContourFinder contour_finder_;

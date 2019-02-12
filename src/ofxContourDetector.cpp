@@ -21,26 +21,26 @@ void ofxContourDetector::update(ofxCvColorImage color_frame)
 void ofxContourDetector::draw(int x, int y, int w, int h)
 {
 	ofPushMatrix();
-	//ofSetHexColor(0xFFFFFF);
-	//gray_image_.draw(x, y, w, h);
-	//working_image_.draw(x, y, w, h);
+	
+	ofVec2f ratio{ static_cast<float>(w) / gray_image_.width, static_cast<float>(h) / gray_image_.height };
 
 	for(int i = 0; i < contour_finder_.nBlobs; ++i)
 	{
-		/*if (contour_finder_.blobs[i].hole)
-			ofSetHexColor(0x0000FF);
-		else
-			ofSetHexColor(0xFF0000);*/
-		contour_finder_.blobs[i].draw(x, y);
-
-		/*if (!contour_finder_.blobs[i].hole) {
-			ofSetHexColor(0x00FF00);
-			ofDrawRectangle(
-				contour_finder_.blobs[i].boundingRect.x + x,
-				contour_finder_.blobs[i].boundingRect.y + y,
-				contour_finder_.blobs[i].boundingRect.width,
-				contour_finder_.blobs[i].boundingRect.height);
-		}*/
+		ofPushStyle();
+		ofNoFill();
+		ofSetHexColor(0x00FFFF);
+		ofBeginShape();
+		for (int j = 0; j < contour_finder_.blobs[i].nPts; ++j) {
+			ofVertex(x + contour_finder_.blobs[i].pts[j].x * ratio.x, y + contour_finder_.blobs[i].pts[j].y * ratio.y);
+		}
+		ofEndShape(true);
+		ofSetHexColor(0xff0099);
+		ofDrawRectangle(
+			x + contour_finder_.blobs[i].boundingRect.x * ratio.x, 
+			y + contour_finder_.blobs[i].boundingRect.y * ratio.y, 
+			contour_finder_.blobs[i].boundingRect.width * ratio.x,
+			contour_finder_.blobs[i].boundingRect.height * ratio.y);
+		ofPopStyle();
 	}
 	ofPopMatrix();
 }

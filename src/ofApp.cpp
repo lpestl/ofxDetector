@@ -20,8 +20,8 @@ void ofApp::setup(){
 	cam_grabber_.setDeviceID(0);
 	cam_grabber_.setDesiredFrameRate(60);
 
-	auto w = 640;
-	auto h = 480;
+	auto w = 1280;
+	auto h = 960;
 	cam_grabber_.setup(w, h);
 	frame_.allocate(w, h);
 
@@ -61,17 +61,13 @@ void ofApp::draw(){
 	ofBackgroundGradient(ofColor::lightBlue, ofColor::blue);
 
 	ofSetHexColor(0xFFFFFF);
-	frame_.draw(10, 10, 640, 480);
+	frame_.draw(ofGetWindowWidth() / 2 - 320, 10, 640, 480);
 
-	motion_detector_.draw(660, 10, 640, 480);
-
-	ofSetHexColor(0xFFFFFF);
-	contour_detector_.working_image_.draw(10, 500, 640, 480);
-	contour_detector_.draw(10, 500, 640, 480);
+	motion_detector_.draw(ofGetWindowWidth() / 2 - 650, 500, 640, 480);
 
 	ofSetHexColor(0xFFFFFF);
-	contour_detector_.getGreyImage().draw(660, 500, 640, 480);
-	contour_detector_.draw(660, 500, 640, 480);
+	contour_detector_.getGreyImage().draw(ofGetWindowWidth() / 2 + 10, 500, 640, 480);
+	contour_detector_.draw(ofGetWindowWidth() / 2 + 10, 500, 640, 480);
 
 	motion_settings_panel_.draw();
 	contour_settings_panel_.draw();
