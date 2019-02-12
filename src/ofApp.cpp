@@ -20,19 +20,25 @@ void ofApp::setup(){
 	cam_grabber_.setDeviceID(0);
 	cam_grabber_.setDesiredFrameRate(60);
 
-	auto w = 1280;
-	auto h = 960;
+	const auto w = 960;
+	const auto h = 720;
 	cam_grabber_.setup(w, h);
 	frame_.allocate(w, h);
 
 	motion_detector_.setup(w, h, 50, 5);
 	contour_detector_.setup(w, h, 10);
+	contour_detector_.maxArea = w * h / 3;
 
 	motion_threshold_slider_.addListener(this, &ofApp::thresholdChanged);
 	count_frames_.addListener(this, &ofApp::countFramesChanged);
 
 	contour_threshold_slider_.addListener(this, &ofApp::thresholdContourChnaged);
 	learn_bg_button_.addListener(this, &ofApp::learnedBgChanged);
+	min_area_slider_.addListener(this, &ofApp::minAreaChanged);
+	max_area_slider_.addListener(this, &ofApp::maxAreaChanged);
+	considered_slider_.addListener(this, &ofApp::nConsidiredChanged);
+	find_holes_toogle_.addListener(this, &ofApp::bFindHolesChanged);
+	use_approximation_toggle_.addListener(this, &ofApp::bUseApproximation);
 
 	motion_settings_panel_.setup("MotionDetectorSettings", "motion_settings.xml");
 	motion_settings_panel_.add(motion_threshold_slider_.setup("threshold_motion", 80, 0, 255));
@@ -41,6 +47,11 @@ void ofApp::setup(){
 	contour_settings_panel_.setup("ContourDetectorSettings", "contour_settings.xml", motion_settings_panel_.getWidth() + 20, 10);
 	contour_settings_panel_.add(learn_bg_button_.setup("Learn Background"));
 	contour_settings_panel_.add(contour_threshold_slider_.setup("threshold_contour", 30, 0, 255));
+	contour_settings_panel_.add(min_area_slider_.setup("minArea", 20, 1, w*h / 3));
+	contour_settings_panel_.add(max_area_slider_.setup("minArea", w*h / 3, 20, w*h));
+	contour_settings_panel_.add(considered_slider_.setup("nConsidered", 10, 1, 100));
+	contour_settings_panel_.add(find_holes_toogle_.setup("bFindHoles", true));
+	contour_settings_panel_.add(use_approximation_toggle_.setup("bUseApproximation", true));
 }
 
 //--------------------------------------------------------------
@@ -75,6 +86,11 @@ void ofApp::draw(){
 
 void ofApp::exit()
 {
+	min_area_slider_.removeListener(this, &ofApp::minAreaChanged);
+	max_area_slider_.removeListener(this, &ofApp::maxAreaChanged);
+	considered_slider_.removeListener(this, &ofApp::nConsidiredChanged);
+	find_holes_toogle_.removeListener(this, &ofApp::bFindHolesChanged);
+	use_approximation_toggle_.removeListener(this, &ofApp::bUseApproximation);
 	learn_bg_button_.removeListener(this, &ofApp::learnedBgChanged);
 	contour_threshold_slider_.removeListener(this, &ofApp::thresholdContourChnaged);
 	motion_threshold_slider_.removeListener(this, &ofApp::thresholdChanged);
@@ -153,6 +169,33 @@ void ofApp::learnedBgChanged()
 	bg = frame_;
 	contour_detector_.setBackgroundImage(bg);
 
+}
+
+void ofApp::minAreaChanged(int& minArea)
+{
+	max_area_slider_.setMin(minArea);
+	contour_detector_.minArea = minArea;
+}
+
+void ofApp::maxAreaChanged(int& maxArea)
+{
+	min_area_slider_.setMax(maxArea);
+	contour_detector_.maxArea = maxArea;
+}
+
+void ofApp::nConsidiredChanged(int& nConsidired)
+{
+	contour_detector_.nConsidired = nConsidired;
+}
+
+void ofApp::bFindHolesChanged(bool& bFindHoles)
+{
+	contour_detector_.bFindHoles = bFindHoles;
+}
+
+void ofApp::bUseApproximation(bool& bUseApproximation)
+{
+	contour_detector_.bUseApproximation = bUseApproximation;
 }
 
 

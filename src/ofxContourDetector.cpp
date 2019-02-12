@@ -15,7 +15,7 @@ void ofxContourDetector::update(ofxCvColorImage color_frame)
 	working_image_.absDiff(background_, gray_image_);
 	working_image_.threshold(threshold_);
 
-	contour_finder_.findContours(working_image_, 20, background_.width * background_.height / 3, 10, true);
+	contour_finder_.findContours(working_image_, minArea, maxArea, nConsidired, bFindHoles, bUseApproximation);
 }
 
 void ofxContourDetector::draw(int x, int y, int w, int h)

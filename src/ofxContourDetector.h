@@ -12,6 +12,12 @@ public:
 	void setBackgroundImage(ofxCvGrayscaleImage bg_image);
 	ofxCvGrayscaleImage getBackgroungImage() const;
 
+	int minArea = 20;
+	int maxArea = 1000;
+	int nConsidired = 10;
+	bool bFindHoles = true;
+	bool bUseApproximation = true;
+
 private:
 	ofxCvGrayscaleImage background_;
 	ofxCvGrayscaleImage working_image_;
