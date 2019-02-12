@@ -30,14 +30,23 @@ public:
 	void thresholdChanged(int &threshold);
 	void countFramesChanged(int &countFrame);
 
+	void thresholdContourChnaged(int &threshold);
+	void learnedBgChanged();
+
 	ofVideoGrabber 			cam_grabber_;
 	ofxCvColorImage			frame_;
 
 	ofxMotionDetector		motion_detector_;
 	ofxContourDetector		contour_detector_;
 
-	ofxPanel				settings_panel_;
-	ofxIntSlider			threshold_slider_;
+	ofxPanel				common_panel_;
+
+	ofxPanel				motion_settings_panel_;
+	ofxIntSlider			motion_threshold_slider_;
 	ofxIntSlider			count_frames_;
+
+	ofxPanel				contour_settings_panel_;
+	ofxIntSlider			contour_threshold_slider_;
+	ofxButton				learn_bg_button_;
 
 };

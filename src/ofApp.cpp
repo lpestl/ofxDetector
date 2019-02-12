@@ -28,12 +28,19 @@ void ofApp::setup(){
 	motion_detector_.setup(w, h, 50, 5);
 	contour_detector_.setup(w, h, 10);
 
-	threshold_slider_.addListener(this, &ofApp::thresholdChanged);
+	motion_threshold_slider_.addListener(this, &ofApp::thresholdChanged);
 	count_frames_.addListener(this, &ofApp::countFramesChanged);
 
-	settings_panel_.setup("MotionDetectorSettings");
-	settings_panel_.add(threshold_slider_.setup("threshold_motion", 80, 0, 255));
-	settings_panel_.add(count_frames_.setup("number_of_frames", 1, 1, 10));
+	contour_threshold_slider_.addListener(this, &ofApp::thresholdContourChnaged);
+	learn_bg_button_.addListener(this, &ofApp::learnedBgChanged);
+
+	motion_settings_panel_.setup("MotionDetectorSettings", "motion_settings.xml");
+	motion_settings_panel_.add(motion_threshold_slider_.setup("threshold_motion", 80, 0, 255));
+	motion_settings_panel_.add(count_frames_.setup("number_of_frames", 1, 1, 10));
+
+	contour_settings_panel_.setup("ContourDetectorSettings", "contour_settings.xml", motion_settings_panel_.getWidth() + 20, 10);
+	contour_settings_panel_.add(learn_bg_button_.setup("Learn Background"));
+	contour_settings_panel_.add(contour_threshold_slider_.setup("threshold_contour", 30, 0, 255));
 }
 
 //--------------------------------------------------------------
@@ -66,24 +73,21 @@ void ofApp::draw(){
 	contour_detector_.getGreyImage().draw(660, 500, 640, 480);
 	contour_detector_.draw(660, 500, 640, 480);
 
-	settings_panel_.draw();
+	motion_settings_panel_.draw();
+	contour_settings_panel_.draw();
 }
 
 void ofApp::exit()
 {
-	threshold_slider_.removeListener(this, &ofApp::thresholdChanged);
+	learn_bg_button_.removeListener(this, &ofApp::learnedBgChanged);
+	contour_threshold_slider_.removeListener(this, &ofApp::thresholdContourChnaged);
+	motion_threshold_slider_.removeListener(this, &ofApp::thresholdChanged);
 	count_frames_.removeListener(this, &ofApp::countFramesChanged);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	if (key == ' ')
-	{
-		ofxCvGrayscaleImage bg;
-		bg.allocate(frame_.width, frame_.height);
-		bg = frame_;
-		contour_detector_.setBackgroundImage(bg);
-	}
+
 }
 
 //--------------------------------------------------------------
@@ -140,6 +144,21 @@ void ofApp::countFramesChanged(int& countFrame)
 {
 	motion_detector_.setNumberFramesRemembered(countFrame);
 }
+
+void ofApp::thresholdContourChnaged(int& threshold)
+{
+	contour_detector_.setThreshold(threshold);
+}
+
+void ofApp::learnedBgChanged()
+{
+	ofxCvGrayscaleImage bg;
+	bg.allocate(frame_.width, frame_.height);
+	bg = frame_;
+	contour_detector_.setBackgroundImage(bg);
+
+}
+
 
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){ 

@@ -31,7 +31,6 @@ void ofxContourDetector::draw(int x, int y, int w, int h)
 			ofSetHexColor(0x0000FF);
 		else
 			ofSetHexColor(0xFF0000);*/
-
 		contour_finder_.blobs[i].draw(x, y);
 
 		/*if (!contour_finder_.blobs[i].hole) {
