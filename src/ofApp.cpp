@@ -20,12 +20,13 @@ void ofApp::setup(){
 	cam_grabber_.setDeviceID(0);
 	cam_grabber_.setDesiredFrameRate(60);
 
-	auto w = 960;
-	auto h = 720;
+	auto w = 640;
+	auto h = 480;
 	cam_grabber_.setup(w, h);
 	frame_.allocate(w, h);
 
 	motion_detector_.setup(w, h, 50, 5);
+	contour_detector_.setup(w, h, 10);
 
 	threshold_slider_.addListener(this, &ofApp::thresholdChanged);
 	count_frames_.addListener(this, &ofApp::countFramesChanged);
@@ -44,6 +45,7 @@ void ofApp::update(){
 		frame_.setFromPixels(cam_grabber_.getPixels());
 
 		motion_detector_.update(frame_);
+		contour_detector_.update(frame_);
 	}
 }
 
@@ -56,6 +58,14 @@ void ofApp::draw(){
 
 	motion_detector_.draw(660, 10, 640, 480);
 
+	ofSetHexColor(0xFFFFFF);
+	contour_detector_.working_image_.draw(10, 500, 640, 480);
+	contour_detector_.draw(10, 500, 640, 480);
+
+	ofSetHexColor(0xFFFFFF);
+	contour_detector_.getGreyImage().draw(660, 500, 640, 480);
+	contour_detector_.draw(660, 500, 640, 480);
+
 	settings_panel_.draw();
 }
 
@@ -67,7 +77,13 @@ void ofApp::exit()
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+	if (key == ' ')
+	{
+		ofxCvGrayscaleImage bg;
+		bg.allocate(frame_.width, frame_.height);
+		bg = frame_;
+		contour_detector_.setBackgroundImage(bg);
+	}
 }
 
 //--------------------------------------------------------------

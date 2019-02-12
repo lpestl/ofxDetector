@@ -5,6 +5,7 @@
 #include "ofMain.h"
 #include "ofxMotionDetector.h"
 #include "ofxGui.h"
+#include "ofxContourDetector.h"
 
 class ofApp : public ofBaseApp {
 
@@ -31,7 +32,10 @@ public:
 
 	ofVideoGrabber 			cam_grabber_;
 	ofxCvColorImage			frame_;
+
 	ofxMotionDetector		motion_detector_;
+	ofxContourDetector		contour_detector_;
+
 	ofxPanel				settings_panel_;
 	ofxIntSlider			threshold_slider_;
 	ofxIntSlider			count_frames_;
