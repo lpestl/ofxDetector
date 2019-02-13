@@ -21,7 +21,8 @@
 x64/
 x86/
 bld/
-[Bb]in/
+[Bb]in/*
+!bin/data/
 [Oo]bj/
 [Ll]og/
 
