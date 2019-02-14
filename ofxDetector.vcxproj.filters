@@ -73,6 +73,9 @@
     <ClCompile Include="src\ofxContourDetector.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\ofxSettingPerspective.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -1305,6 +1308,9 @@
       <Filter>addons\ofxOpenCv\libs\opencv\include\opencv2</Filter>
     </ClInclude>
     <ClInclude Include="src\ofxContourDetector.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ofxSettingPerspective.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

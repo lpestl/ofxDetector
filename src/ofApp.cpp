@@ -62,6 +62,8 @@ void ofApp::update(){
 	{
 		frame_.setFromPixels(cam_grabber_.getPixels());
 
+		frame_.warpPerspective(ofPoint(200, 200), ofPoint(760, 200), ofPoint(959, 719), ofPoint(1, 719));
+
 		motion_detector_.update(frame_);
 		contour_detector_.update(frame_);
 	}
