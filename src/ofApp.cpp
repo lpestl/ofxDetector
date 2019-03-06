@@ -1,5 +1,5 @@
 #include "ofApp.h"
-#include "cuda_perf.hpp"
+//#include "cuda_perf.hpp"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -48,7 +48,7 @@ void ofApp::setup(){
 	contour_settings_panel_.add(learn_bg_button_.setup("Learn Background"));
 	contour_settings_panel_.add(contour_threshold_slider_.setup("threshold_contour", 30, 0, 255));
 	contour_settings_panel_.add(min_area_slider_.setup("minArea", 20, 1, w*h / 3));
-	contour_settings_panel_.add(max_area_slider_.setup("minArea", w*h / 3, 20, w*h));
+	contour_settings_panel_.add(max_area_slider_.setup("maxArea", w*h / 3, 20, w*h));
 	contour_settings_panel_.add(considered_slider_.setup("nConsidered", 10, 1, 100));
 	contour_settings_panel_.add(find_holes_toogle_.setup("bFindHoles", true));
 	contour_settings_panel_.add(use_approximation_toggle_.setup("bUseApproximation", true));
@@ -62,7 +62,7 @@ void ofApp::update(){
 	{
 		frame_.setFromPixels(cam_grabber_.getPixels());
 
-		frame_.warpPerspective(ofPoint(200, 200), ofPoint(760, 200), ofPoint(959, 719), ofPoint(1, 719));
+		//frame_.warpPerspective(ofPoint(200, 200), ofPoint(760, 200), ofPoint(959, 719), ofPoint(1, 719));
 
 		motion_detector_.update(frame_);
 		contour_detector_.update(frame_);

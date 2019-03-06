@@ -1,6 +1,6 @@
 #pragma once
 
-#define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING
+//#define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING
 
 #include "ofMain.h"
 #include "ofxMotionDetector.h"
