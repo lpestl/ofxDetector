@@ -202,6 +202,7 @@
     <ClCompile Include="..\..\openFrameworks\addons\ofxOpenCv\src\ofxCvHaarFinder.cpp" />
     <ClCompile Include="..\..\openFrameworks\addons\ofxOpenCv\src\ofxCvImage.cpp" />
     <ClCompile Include="..\..\openFrameworks\addons\ofxOpenCv\src\ofxCvShortImage.cpp" />
+    <ClCompile Include="src\ofxSettingPerspective.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h" />
@@ -559,6 +560,7 @@
     <ClInclude Include="..\..\openFrameworks\addons\ofxOpenCv\libs\opencv\include\opencv2\viz\widget_accessor.hpp" />
     <ClInclude Include="..\..\openFrameworks\addons\ofxOpenCv\libs\opencv\include\opencv2\viz.hpp" />
     <ClInclude Include="..\..\openFrameworks\addons\ofxOpenCv\libs\opencv\include\opencv2\world.hpp" />
+    <ClInclude Include="src\ofxSettingPerspective.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">
