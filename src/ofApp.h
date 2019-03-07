@@ -48,6 +48,8 @@ public:
 
 	ofxPanel				common_panel_;
 
+	ofxPanel				perspective_panel_;
+
 	ofxPanel				motion_settings_panel_;
 	ofxIntSlider			motion_threshold_slider_;
 	ofxIntSlider			count_frames_;
@@ -60,4 +62,5 @@ public:
 	ofxIntSlider			considered_slider_;
 	ofxToggle				find_holes_toogle_;
 	ofxToggle				use_approximation_toggle_;
+
 };

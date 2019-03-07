@@ -43,11 +43,11 @@ void ofApp::setup(){
 	find_holes_toogle_.addListener(this, &ofApp::bFindHolesChanged);
 	use_approximation_toggle_.addListener(this, &ofApp::bUseApproximation);
 
-	motion_settings_panel_.setup("MotionDetectorSettings", "motion_settings.xml");
+	motion_settings_panel_.setup("MotionDetectorSettings", "motion_settings.xml", 10, 500);
 	motion_settings_panel_.add(motion_threshold_slider_.setup("threshold_motion", 80, 0, 255));
 	motion_settings_panel_.add(count_frames_.setup("number_of_frames", 1, 1, 10));
 
-	contour_settings_panel_.setup("ContourDetectorSettings", "contour_settings.xml", motion_settings_panel_.getWidth() + 20, 10);
+	contour_settings_panel_.setup("ContourDetectorSettings", "contour_settings.xml", 660, 500);
 	contour_settings_panel_.add(learn_bg_button_.setup("Learn Background"));
 	contour_settings_panel_.add(contour_threshold_slider_.setup("threshold_contour", 30, 0, 255));
 	contour_settings_panel_.add(min_area_slider_.setup("minArea", 20, 1, w*h / 3));
@@ -90,6 +90,7 @@ void ofApp::draw(){
 	contour_detector_.draw(660, 500, 640, 480);
 
 	motion_settings_panel_.draw();
+
 	contour_settings_panel_.draw();
 }
 

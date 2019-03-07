@@ -121,6 +121,19 @@ void ofxSettingPerspective::mouseDragged(int x, int y, int button)
 
 			setting_corners_[draggedCornerIndex].x += (x - last_mouse_position_.x) * scale.x;
 			setting_corners_[draggedCornerIndex].y += (y - last_mouse_position_.y) * scale.y;
+
+			if (setting_corners_[draggedCornerIndex].x < 0)
+				setting_corners_[draggedCornerIndex].x = 0;
+
+			if (setting_corners_[draggedCornerIndex].y < 0)
+				setting_corners_[draggedCornerIndex].y = 0;
+
+			if (setting_corners_[draggedCornerIndex].x > setting_rect_.width * scale.x)
+				setting_corners_[draggedCornerIndex].x = setting_rect_.width * scale.x;
+
+			if (setting_corners_[draggedCornerIndex].y > setting_rect_.height * scale.y)
+				setting_corners_[draggedCornerIndex].y = setting_rect_.height * scale.y;
+
 		}
 
 		last_mouse_position_.set(x, y);
