@@ -11,7 +11,7 @@ public:
 
 	void setup(unsigned width_image, unsigned height_image);
 	void update(ofxCvColorImage color_frame);
-	void draw(ofRectangle setting_rect, ofRectangle output_rect);
+	void draw(ofRectangle output_rect);
 
 	void setMode(mode mode);
 	mode getMode() const;
@@ -25,6 +25,9 @@ public:
 	ofPoint getBottomLeftCorner();
 	void setBottomLeftCorner(ofPoint point);
 
+	ofRectangle getSettingsRect() const;
+	void setSettingsRect(ofRectangle settings_rect);
+
 	ofxCvGrayscaleImage getResult() const;
 
 	void mouseDragged(int x, int y, int button);
@@ -32,11 +35,13 @@ public:
 	void mouseReleased(int x, int y, int button);
 
 private:
-	void drawCorner(ofRectangle setting_rect, ofPoint & corner);
+	void drawCorner(ofVec2f scale, ofPoint & corner) const;
 
 	ofxCvGrayscaleImage		source_;
 	ofxCvGrayscaleImage		result_;
 	std::vector<ofPoint>	setting_corners_;
+	short					draggedCornerIndex = -1;
+	ofRectangle				setting_rect_;
 	ofPoint					last_mouse_position_;
 	mode					mode_ = view;
 };

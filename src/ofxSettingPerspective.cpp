@@ -15,10 +15,35 @@ void ofxSettingPerspective::setup(unsigned width_image, unsigned height_image)
 void ofxSettingPerspective::update(ofxCvColorImage color_frame)
 {
 	source_ = color_frame;
+
+	result_ = source_;
+	result_.warpPerspective(setting_corners_[0], setting_corners_[1], setting_corners_[2], setting_corners_[3]);
 }
 
-void ofxSettingPerspective::draw(ofRectangle setting_rect, ofRectangle output_rect)
+void ofxSettingPerspective::draw(ofRectangle output_rect)
 {
+	if (mode_ == editting) {
+		const auto scale = ofVec2f(source_.width / setting_rect_.width, source_.height / setting_rect_.height);
+
+		ofPushMatrix();
+		ofPushStyle();
+
+		ofSetLineWidth(1);
+		ofSetHexColor(0x005555);
+
+		ofDrawLine(setting_rect_.x + setting_corners_[0].x / scale.x, setting_rect_.y + setting_corners_[0].y / scale.y, setting_rect_.x + setting_corners_[1].x / scale.x, setting_rect_.y + setting_corners_[1].y / scale.y);
+		ofDrawLine(setting_rect_.x + setting_corners_[1].x / scale.x, setting_rect_.y + setting_corners_[1].y / scale.y, setting_rect_.x + setting_corners_[2].x / scale.x, setting_rect_.y + setting_corners_[2].y / scale.y);
+		ofDrawLine(setting_rect_.x + setting_corners_[2].x / scale.x, setting_rect_.y + setting_corners_[2].y / scale.y, setting_rect_.x + setting_corners_[3].x / scale.x, setting_rect_.y + setting_corners_[3].y / scale.y);
+		ofDrawLine(setting_rect_.x + setting_corners_[3].x / scale.x, setting_rect_.y + setting_corners_[3].y / scale.y, setting_rect_.x + setting_corners_[0].x / scale.x, setting_rect_.y + setting_corners_[0].y / scale.y);
+
+		ofPopMatrix();
+		ofPopStyle();
+
+		for (auto& corner : setting_corners_)
+			drawCorner(scale, corner);
+	}
+
+	result_.draw(output_rect);
 }
 
 void ofxSettingPerspective::setMode(mode mode)
@@ -71,6 +96,16 @@ void ofxSettingPerspective::setBottomLeftCorner(ofPoint point)
 	setting_corners_[3] = point;
 }
 
+ofRectangle ofxSettingPerspective::getSettingsRect() const
+{
+	return setting_rect_;
+}
+
+void ofxSettingPerspective::setSettingsRect(ofRectangle settings_rect)
+{
+	setting_rect_ = settings_rect;
+}
+
 ofxCvGrayscaleImage ofxSettingPerspective::getResult() const
 {
 	return result_;
@@ -78,21 +113,55 @@ ofxCvGrayscaleImage ofxSettingPerspective::getResult() const
 
 void ofxSettingPerspective::mouseDragged(int x, int y, int button)
 {
+	if (button == 0) 
+	{
+		if ((draggedCornerIndex >= 0) && (draggedCornerIndex < 4))
+		{
+			const auto scale = ofVec2f(source_.width / setting_rect_.width, source_.height / setting_rect_.height);
 
-	if (button == 0)
+			setting_corners_[draggedCornerIndex].x += (x - last_mouse_position_.x) * scale.x;
+			setting_corners_[draggedCornerIndex].y += (y - last_mouse_position_.y) * scale.y;
+		}
+
 		last_mouse_position_.set(x, y);
+	}
 }
 
 void ofxSettingPerspective::mousePressed(int x, int y, int button)
 {
-	if (button == 0)
+	if (button == 0) 
+	{
 		last_mouse_position_.set(x, y);
+
+		const auto scale = ofVec2f(source_.width / setting_rect_.width, source_.height / setting_rect_.height);
+
+		for (auto i = 0; i < 4; ++i)
+			if (ofRectangle(setting_rect_.x + (setting_corners_[i].x - 10) / scale.x, setting_rect_.y + (setting_corners_[i].y - 10) / scale.y, 20 / scale.x, 20 / scale.y).inside(x, y))
+				draggedCornerIndex = i;
+	}
 }
 
 void ofxSettingPerspective::mouseReleased(int x, int y, int button)
 {
+	if (button == 0)
+	{
+		draggedCornerIndex = -1;
+	}
 }
 
-void ofxSettingPerspective::drawCorner(ofRectangle setting_rect, ofPoint& corner)
+void ofxSettingPerspective::drawCorner(ofVec2f scale, ofPoint& corner) const
 {
+	ofPushMatrix();
+	ofPushStyle();
+
+	ofSetLineWidth(2);
+	ofSetHexColor(0xAA0000);
+	
+	ofDrawLine(setting_rect_.x + (corner.x - 10) / scale.x, setting_rect_.y + (corner.y) / scale.y, setting_rect_.x + (corner.x - 2) / scale.x, setting_rect_.y + (corner.y) / scale.y);
+	ofDrawLine(setting_rect_.x + (corner.x + 10) / scale.x, setting_rect_.y + (corner.y) / scale.y, setting_rect_.x + (corner.x + 2) / scale.x, setting_rect_.y + (corner.y) / scale.y);
+	ofDrawLine(setting_rect_.x + (corner.x) / scale.x, setting_rect_.y + (corner.y - 10) / scale.y, setting_rect_.x + (corner.x) / scale.x, setting_rect_.y + (corner.y - 2) / scale.y);
+	ofDrawLine(setting_rect_.x + (corner.x) / scale.x, setting_rect_.y + (corner.y + 10) / scale.y, setting_rect_.x + (corner.x) / scale.x, setting_rect_.y + (corner.y + 2) / scale.y);
+
+	ofPopStyle();
+	ofPopMatrix();
 }

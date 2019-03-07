@@ -25,6 +25,9 @@ void ofApp::setup(){
 	cam_grabber_.setup(w, h);
 	frame_.allocate(w, h);
 
+	setting_perspective_.setup(w, h);
+	setting_perspective_.setSettingsRect(ofRectangle(10, 10, 640, 480));
+	setting_perspective_.setMode(ofxSettingPerspective::editting);
 	motion_detector_.setup(w, h, 50, 5);
 	contour_detector_.setup(w, h, 10);
 	contour_detector_.maxArea = w * h / 3;
@@ -63,6 +66,7 @@ void ofApp::update(){
 		frame_.setFromPixels(cam_grabber_.getPixels());
 
 		//frame_.warpPerspective(ofPoint(200, 200), ofPoint(760, 200), ofPoint(959, 719), ofPoint(1, 719));
+		setting_perspective_.update(frame_);
 
 		motion_detector_.update(frame_);
 		contour_detector_.update(frame_);
@@ -74,13 +78,16 @@ void ofApp::draw(){
 	ofBackgroundGradient(ofColor::lightBlue, ofColor::blue);
 
 	ofSetHexColor(0xFFFFFF);
-	frame_.draw(ofGetWindowWidth() / 2 - 320, 10, 640, 480);
 
-	motion_detector_.draw(ofGetWindowWidth() / 2 - 650, 500, 640, 480);
+	frame_.draw(10, 10, 640, 480);
+
+	setting_perspective_.draw(ofRectangle(660, 10, 640, 480));
+
+	motion_detector_.draw(10, 500, 640, 480);
 
 	ofSetHexColor(0xFFFFFF);
-	contour_detector_.getGreyImage().draw(ofGetWindowWidth() / 2 + 10, 500, 640, 480);
-	contour_detector_.draw(ofGetWindowWidth() / 2 + 10, 500, 640, 480);
+	contour_detector_.getGreyImage().draw(660, 500, 640, 480);
+	contour_detector_.draw(660, 500, 640, 480);
 
 	motion_settings_panel_.draw();
 	contour_settings_panel_.draw();
@@ -116,17 +123,17 @@ void ofApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-
+	setting_perspective_.mouseDragged(x, y, button);
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+	setting_perspective_.mousePressed(x, y, button);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-
+	setting_perspective_.mouseReleased(x, y, button);
 }
 
 //--------------------------------------------------------------

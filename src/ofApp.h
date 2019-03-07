@@ -3,9 +3,10 @@
 //#define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING
 
 #include "ofMain.h"
-#include "ofxMotionDetector.h"
 #include "ofxGui.h"
 #include "ofxContourDetector.h"
+#include "ofxMotionDetector.h"
+#include "ofxSettingPerspective.h"
 
 class ofApp : public ofBaseApp {
 
@@ -43,6 +44,7 @@ public:
 
 	ofxMotionDetector		motion_detector_;
 	ofxContourDetector		contour_detector_;
+	ofxSettingPerspective	setting_perspective_;
 
 	ofxPanel				common_panel_;
 
