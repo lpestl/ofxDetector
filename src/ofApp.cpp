@@ -47,6 +47,7 @@ void ofApp::setup(){
 
 	perspective_panel_.setup("PerspectiveSettings", "perspective_settings.xml", 660, 10);
 	perspective_panel_.add(isEditModeToggle_.setup("isEditMode", false));
+	perspective_panel_.add(setting_perspective_.parameters);
 
 	motion_settings_panel_.setup("MotionDetectorSettings", "motion_settings.xml", 10, 500);
 	motion_settings_panel_.add(motion_threshold_slider_.setup("threshold_motion", 80, 0, 255));
@@ -69,12 +70,11 @@ void ofApp::update(){
 	if (cam_grabber_.isFrameNew())
 	{
 		frame_.setFromPixels(cam_grabber_.getPixels());
-
-		//frame_.warpPerspective(ofPoint(200, 200), ofPoint(760, 200), ofPoint(959, 719), ofPoint(1, 719));
 		setting_perspective_.update(frame_);
+		const auto new_frame = setting_perspective_.getResult();
 
-		motion_detector_.update(frame_);
-		contour_detector_.update(frame_);
+		motion_detector_.update(new_frame);
+		contour_detector_.update(new_frame);
 	}
 }
 

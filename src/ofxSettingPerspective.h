@@ -16,33 +16,40 @@ public:
 	void setMode(mode mode);
 	mode getMode() const;
 
-	ofPoint getTopLeftCorner();
-	void setTopLeftCorner(ofPoint point);
-	ofPoint getTopRightCorner();
-	void setTopRightCorner(ofPoint point);
-	ofPoint getBottomRightCorner();
-	void setBottomRightCorner(ofPoint point);
-	ofPoint getBottomLeftCorner();
-	void setBottomLeftCorner(ofPoint point);
+	glm::vec2 getTopLeftCorner() const;
+	void setTopLeftCorner(glm::vec2 point);
+	glm::vec2 getTopRightCorner() const;
+	void setTopRightCorner(glm::vec2 point);
+	glm::vec2 getBottomRightCorner() const;
+	void setBottomRightCorner(glm::vec2 point);
+	glm::vec2 getBottomLeftCorner() const;
+	void setBottomLeftCorner(glm::vec2 point);
 
 	ofRectangle getSettingsRect() const;
 	void setSettingsRect(ofRectangle settings_rect);
 
-	ofxCvGrayscaleImage getResult() const;
+	ofxCvColorImage getResult() const;
 
 	void mouseDragged(int x, int y, int button);
 	void mousePressed(int x, int y, int button);
 	void mouseReleased(int x, int y, int button);
 
+	ofParameterGroup parameters;
+
 private:
-	void drawCorner(ofVec2f scale, ofPoint & corner) const;
+	void drawCorner(ofVec2f scale, ofParameter<glm::vec2>& corner) const;
 
 	//ofxCvGrayscaleImage		source_;
-	//ofxCvGrayscaleImage		result_;
-	std::vector<ofPoint>	setting_corners_;
+	ofxCvColorImage			result_;
+	//std::vector<ofPoint>	setting_corners_;
 	short					draggedCornerIndex = -1;
 	ofRectangle				setting_rect_;
 	ofPoint					last_mouse_position_;
 	mode					mode_ = view;
+
+	ofParameter<glm::vec2> topLeftPosition;
+	ofParameter<glm::vec2> topRightPosition;
+	ofParameter<glm::vec2> bottomRightPosition;
+	ofParameter<glm::vec2> bottomLeftPosition;
 };
 

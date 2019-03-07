@@ -1,4 +1,12 @@
 <?xml version="1.0"?>
 <PerspectiveSettings>
-	<isEditMode>1</isEditMode>
+	<isEditMode>0</isEditMode>
+	<group>
+		<Corners>
+			<TopLeft>0, 0</TopLeft>
+			<TopRight>1, 0</TopRight>
+			<BottomRight>959, 719</BottomRight>
+			<BottomLeft>0, 719</BottomLeft>
+		</Corners>
+	</group>
 </PerspectiveSettings>
