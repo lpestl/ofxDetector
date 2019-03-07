@@ -37,8 +37,8 @@ public:
 private:
 	void drawCorner(ofVec2f scale, ofPoint & corner) const;
 
-	ofxCvGrayscaleImage		source_;
-	ofxCvGrayscaleImage		result_;
+	//ofxCvGrayscaleImage		source_;
+	//ofxCvGrayscaleImage		result_;
 	std::vector<ofPoint>	setting_corners_;
 	short					draggedCornerIndex = -1;
 	ofRectangle				setting_rect_;

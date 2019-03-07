@@ -32,6 +32,8 @@ void ofApp::setup(){
 	contour_detector_.setup(w, h, 10);
 	contour_detector_.maxArea = w * h / 3;
 
+	isEditModeToggle_.addListener(this, &ofApp::perspectiveModeChanged);
+
 	motion_threshold_slider_.addListener(this, &ofApp::thresholdChanged);
 	count_frames_.addListener(this, &ofApp::countFramesChanged);
 
@@ -42,6 +44,9 @@ void ofApp::setup(){
 	considered_slider_.addListener(this, &ofApp::nConsidiredChanged);
 	find_holes_toogle_.addListener(this, &ofApp::bFindHolesChanged);
 	use_approximation_toggle_.addListener(this, &ofApp::bUseApproximation);
+
+	perspective_panel_.setup("PerspectiveSettings", "perspective_settings.xml", 660, 10);
+	perspective_panel_.add(isEditModeToggle_.setup("isEditMode", false));
 
 	motion_settings_panel_.setup("MotionDetectorSettings", "motion_settings.xml", 10, 500);
 	motion_settings_panel_.add(motion_threshold_slider_.setup("threshold_motion", 80, 0, 255));
@@ -89,13 +94,14 @@ void ofApp::draw(){
 	contour_detector_.getGreyImage().draw(660, 500, 640, 480);
 	contour_detector_.draw(660, 500, 640, 480);
 
+	perspective_panel_.draw();
 	motion_settings_panel_.draw();
-
 	contour_settings_panel_.draw();
 }
 
 void ofApp::exit()
 {
+	isEditModeToggle_.removeListener(this, &ofApp::perspectiveModeChanged);
 	min_area_slider_.removeListener(this, &ofApp::minAreaChanged);
 	max_area_slider_.removeListener(this, &ofApp::maxAreaChanged);
 	considered_slider_.removeListener(this, &ofApp::nConsidiredChanged);
@@ -155,6 +161,11 @@ void ofApp::windowResized(int w, int h){
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg){
 
+}
+
+void ofApp::perspectiveModeChanged(bool& isEditMode)
+{
+	setting_perspective_.setMode(isEditMode ? ofxSettingPerspective::mode::editting : ofxSettingPerspective::mode::view);
 }
 
 void ofApp::thresholdChanged(int& threshold)

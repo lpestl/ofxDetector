@@ -22,23 +22,23 @@ void ofxSettingPerspective::update(ofxCvColorImage color_frame)
 
 void ofxSettingPerspective::draw(ofRectangle output_rect)
 {
+	const auto scale = ofVec2f(source_.width / setting_rect_.width, source_.height / setting_rect_.height);
+
+	ofPushMatrix();
+	ofPushStyle();
+
+	ofSetLineWidth(1);
+	ofSetHexColor(0x005555);
+
+	ofDrawLine(setting_rect_.x + setting_corners_[0].x / scale.x, setting_rect_.y + setting_corners_[0].y / scale.y, setting_rect_.x + setting_corners_[1].x / scale.x, setting_rect_.y + setting_corners_[1].y / scale.y);
+	ofDrawLine(setting_rect_.x + setting_corners_[1].x / scale.x, setting_rect_.y + setting_corners_[1].y / scale.y, setting_rect_.x + setting_corners_[2].x / scale.x, setting_rect_.y + setting_corners_[2].y / scale.y);
+	ofDrawLine(setting_rect_.x + setting_corners_[2].x / scale.x, setting_rect_.y + setting_corners_[2].y / scale.y, setting_rect_.x + setting_corners_[3].x / scale.x, setting_rect_.y + setting_corners_[3].y / scale.y);
+	ofDrawLine(setting_rect_.x + setting_corners_[3].x / scale.x, setting_rect_.y + setting_corners_[3].y / scale.y, setting_rect_.x + setting_corners_[0].x / scale.x, setting_rect_.y + setting_corners_[0].y / scale.y);
+
+	ofPopMatrix();
+	ofPopStyle();
+
 	if (mode_ == editting) {
-		const auto scale = ofVec2f(source_.width / setting_rect_.width, source_.height / setting_rect_.height);
-
-		ofPushMatrix();
-		ofPushStyle();
-
-		ofSetLineWidth(1);
-		ofSetHexColor(0x005555);
-
-		ofDrawLine(setting_rect_.x + setting_corners_[0].x / scale.x, setting_rect_.y + setting_corners_[0].y / scale.y, setting_rect_.x + setting_corners_[1].x / scale.x, setting_rect_.y + setting_corners_[1].y / scale.y);
-		ofDrawLine(setting_rect_.x + setting_corners_[1].x / scale.x, setting_rect_.y + setting_corners_[1].y / scale.y, setting_rect_.x + setting_corners_[2].x / scale.x, setting_rect_.y + setting_corners_[2].y / scale.y);
-		ofDrawLine(setting_rect_.x + setting_corners_[2].x / scale.x, setting_rect_.y + setting_corners_[2].y / scale.y, setting_rect_.x + setting_corners_[3].x / scale.x, setting_rect_.y + setting_corners_[3].y / scale.y);
-		ofDrawLine(setting_rect_.x + setting_corners_[3].x / scale.x, setting_rect_.y + setting_corners_[3].y / scale.y, setting_rect_.x + setting_corners_[0].x / scale.x, setting_rect_.y + setting_corners_[0].y / scale.y);
-
-		ofPopMatrix();
-		ofPopStyle();
-
 		for (auto& corner : setting_corners_)
 			drawCorner(scale, corner);
 	}
@@ -113,7 +113,7 @@ ofxCvGrayscaleImage ofxSettingPerspective::getResult() const
 
 void ofxSettingPerspective::mouseDragged(int x, int y, int button)
 {
-	if (button == 0) 
+	if ((button == 0) && (mode_ == editting))
 	{
 		if ((draggedCornerIndex >= 0) && (draggedCornerIndex < 4))
 		{
@@ -142,7 +142,7 @@ void ofxSettingPerspective::mouseDragged(int x, int y, int button)
 
 void ofxSettingPerspective::mousePressed(int x, int y, int button)
 {
-	if (button == 0) 
+	if ((button == 0) && (mode_ == editting))
 	{
 		last_mouse_position_.set(x, y);
 
@@ -156,7 +156,7 @@ void ofxSettingPerspective::mousePressed(int x, int y, int button)
 
 void ofxSettingPerspective::mouseReleased(int x, int y, int button)
 {
-	if (button == 0)
+	if ((button == 0) && (mode_ == editting))
 	{
 		draggedCornerIndex = -1;
 	}

@@ -28,6 +28,8 @@ public:
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
 
+	void perspectiveModeChanged(bool& isEditMode);
+
 	void thresholdChanged(int &threshold);
 	void countFramesChanged(int &countFrame);
 
@@ -49,6 +51,7 @@ public:
 	ofxPanel				common_panel_;
 
 	ofxPanel				perspective_panel_;
+	ofxToggle				isEditModeToggle_;
 
 	ofxPanel				motion_settings_panel_;
 	ofxIntSlider			motion_threshold_slider_;
