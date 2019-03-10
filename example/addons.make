@@ -1,0 +1,3 @@
+ofxDetector
+ofxGui
+ofxOpenCv

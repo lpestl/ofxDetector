@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<MotionDetectorSettings>
-	<threshold_motion>80</threshold_motion>
-	<number_of_frames>1</number_of_frames>
-</MotionDetectorSettings>

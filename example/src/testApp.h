@@ -8,7 +8,7 @@
 #include "ofxMotionDetector.h"
 #include "ofxSettingPerspective.h"
 
-class ofApp : public ofBaseApp {
+class testApp : public ofBaseApp {
 
 public:
 	void setup();

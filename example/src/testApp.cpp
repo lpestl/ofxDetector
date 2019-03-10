@@ -1,8 +1,8 @@
-#include "ofApp.h"
+#include "testApp.h"
 //#include "cuda_perf.hpp"
 
 //--------------------------------------------------------------
-void ofApp::setup(){
+void testApp::setup(){
 	//get back a list of devices.
 	vector<ofVideoDevice> devices = cam_grabber_.listDevices();
 
@@ -32,18 +32,18 @@ void ofApp::setup(){
 	contour_detector_.setup(w, h, 10);
 	contour_detector_.maxArea = w * h / 3;
 
-	isEditModeToggle_.addListener(this, &ofApp::perspectiveModeChanged);
+	isEditModeToggle_.addListener(this, &testApp::perspectiveModeChanged);
 
-	motion_threshold_slider_.addListener(this, &ofApp::thresholdChanged);
-	count_frames_.addListener(this, &ofApp::countFramesChanged);
+	motion_threshold_slider_.addListener(this, &testApp::thresholdChanged);
+	count_frames_.addListener(this, &testApp::countFramesChanged);
 
-	contour_threshold_slider_.addListener(this, &ofApp::thresholdContourChnaged);
-	learn_bg_button_.addListener(this, &ofApp::learnedBgChanged);
-	min_area_slider_.addListener(this, &ofApp::minAreaChanged);
-	max_area_slider_.addListener(this, &ofApp::maxAreaChanged);
-	considered_slider_.addListener(this, &ofApp::nConsidiredChanged);
-	find_holes_toogle_.addListener(this, &ofApp::bFindHolesChanged);
-	use_approximation_toggle_.addListener(this, &ofApp::bUseApproximation);
+	contour_threshold_slider_.addListener(this, &testApp::thresholdContourChnaged);
+	learn_bg_button_.addListener(this, &testApp::learnedBgChanged);
+	min_area_slider_.addListener(this, &testApp::minAreaChanged);
+	max_area_slider_.addListener(this, &testApp::maxAreaChanged);
+	considered_slider_.addListener(this, &testApp::nConsidiredChanged);
+	find_holes_toogle_.addListener(this, &testApp::bFindHolesChanged);
+	use_approximation_toggle_.addListener(this, &testApp::bUseApproximation);
 
 	perspective_panel_.setup("PerspectiveSettings", "perspective_settings.xml", 660, 10);
 	perspective_panel_.add(isEditModeToggle_.setup("isEditMode", false));
@@ -64,7 +64,7 @@ void ofApp::setup(){
 }
 
 //--------------------------------------------------------------
-void ofApp::update(){
+void testApp::update(){
 	cam_grabber_.update();
 
 	if (cam_grabber_.isFrameNew())
@@ -79,7 +79,7 @@ void ofApp::update(){
 }
 
 //--------------------------------------------------------------
-void ofApp::draw(){
+void testApp::draw(){
 	ofBackgroundGradient(ofColor::lightBlue, ofColor::blue);
 
 	ofSetHexColor(0xFFFFFF);
@@ -99,91 +99,91 @@ void ofApp::draw(){
 	contour_settings_panel_.draw();
 }
 
-void ofApp::exit()
+void testApp::exit()
 {
-	isEditModeToggle_.removeListener(this, &ofApp::perspectiveModeChanged);
-	min_area_slider_.removeListener(this, &ofApp::minAreaChanged);
-	max_area_slider_.removeListener(this, &ofApp::maxAreaChanged);
-	considered_slider_.removeListener(this, &ofApp::nConsidiredChanged);
-	find_holes_toogle_.removeListener(this, &ofApp::bFindHolesChanged);
-	use_approximation_toggle_.removeListener(this, &ofApp::bUseApproximation);
-	learn_bg_button_.removeListener(this, &ofApp::learnedBgChanged);
-	contour_threshold_slider_.removeListener(this, &ofApp::thresholdContourChnaged);
-	motion_threshold_slider_.removeListener(this, &ofApp::thresholdChanged);
-	count_frames_.removeListener(this, &ofApp::countFramesChanged);
+	isEditModeToggle_.removeListener(this, &testApp::perspectiveModeChanged);
+	min_area_slider_.removeListener(this, &testApp::minAreaChanged);
+	max_area_slider_.removeListener(this, &testApp::maxAreaChanged);
+	considered_slider_.removeListener(this, &testApp::nConsidiredChanged);
+	find_holes_toogle_.removeListener(this, &testApp::bFindHolesChanged);
+	use_approximation_toggle_.removeListener(this, &testApp::bUseApproximation);
+	learn_bg_button_.removeListener(this, &testApp::learnedBgChanged);
+	contour_threshold_slider_.removeListener(this, &testApp::thresholdContourChnaged);
+	motion_threshold_slider_.removeListener(this, &testApp::thresholdChanged);
+	count_frames_.removeListener(this, &testApp::countFramesChanged);
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
+void testApp::keyPressed(int key){
 
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
+void testApp::keyReleased(int key){
 
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
+void testApp::mouseMoved(int x, int y ){
+
+}
+
+//--------------------------------------------------------------
+void testApp::mouseDragged(int x, int y, int button){
 	setting_perspective_.mouseDragged(x, y, button);
 }
 
 //--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
+void testApp::mousePressed(int x, int y, int button){
 	setting_perspective_.mousePressed(x, y, button);
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
+void testApp::mouseReleased(int x, int y, int button){
 	setting_perspective_.mouseReleased(x, y, button);
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
+void testApp::mouseEntered(int x, int y){
 
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
+void testApp::mouseExited(int x, int y){
 
 }
 
 //--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
+void testApp::windowResized(int w, int h){
 
 }
 
 //--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
+void testApp::gotMessage(ofMessage msg){
 
 }
 
-void ofApp::perspectiveModeChanged(bool& isEditMode)
+void testApp::perspectiveModeChanged(bool& isEditMode)
 {
 	setting_perspective_.setMode(isEditMode ? ofxSettingPerspective::mode::editting : ofxSettingPerspective::mode::view);
 }
 
-void ofApp::thresholdChanged(int& threshold)
+void testApp::thresholdChanged(int& threshold)
 {
 	motion_detector_.setThreshold(threshold);
 }
 
-void ofApp::countFramesChanged(int& countFrame)
+void testApp::countFramesChanged(int& countFrame)
 {
 	motion_detector_.setNumberFramesRemembered(countFrame);
 }
 
-void ofApp::thresholdContourChnaged(int& threshold)
+void testApp::thresholdContourChnaged(int& threshold)
 {
 	contour_detector_.setThreshold(threshold);
 }
 
-void ofApp::learnedBgChanged()
+void testApp::learnedBgChanged()
 {
 	ofxCvGrayscaleImage bg;
 	bg.allocate(frame_.width, frame_.height);
@@ -192,35 +192,35 @@ void ofApp::learnedBgChanged()
 
 }
 
-void ofApp::minAreaChanged(int& minArea)
+void testApp::minAreaChanged(int& minArea)
 {
 	max_area_slider_.setMin(minArea);
 	contour_detector_.minArea = minArea;
 }
 
-void ofApp::maxAreaChanged(int& maxArea)
+void testApp::maxAreaChanged(int& maxArea)
 {
 	min_area_slider_.setMax(maxArea);
 	contour_detector_.maxArea = maxArea;
 }
 
-void ofApp::nConsidiredChanged(int& nConsidired)
+void testApp::nConsidiredChanged(int& nConsidired)
 {
 	contour_detector_.nConsidired = nConsidired;
 }
 
-void ofApp::bFindHolesChanged(bool& bFindHoles)
+void testApp::bFindHolesChanged(bool& bFindHoles)
 {
 	contour_detector_.bFindHoles = bFindHoles;
 }
 
-void ofApp::bUseApproximation(bool& bUseApproximation)
+void testApp::bUseApproximation(bool& bUseApproximation)
 {
 	contour_detector_.bUseApproximation = bUseApproximation;
 }
 
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
+void testApp::dragEvent(ofDragInfo dragInfo){
 
 }

@@ -122,7 +122,7 @@ void ofxSettingPerspective::setSettingsRect(ofRectangle settings_rect)
 	setting_rect_ = settings_rect;
 }
 
-ofxCvColorImage ofxSettingPerspective::getResult() const
+ofxCvGrayscaleImage ofxSettingPerspective::getResult() const
 {
 	return result_;
 }

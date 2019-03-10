@@ -66,7 +66,7 @@ void ofxMotionDetector::setup(unsigned width_image, unsigned height_image, unsig
 //		ofLogError("ofxCvGrayscaleImage") << "max(): source image size mismatch between first (mom) & second (dad) image";
 //	}
 //}
-void ofxMotionDetector::update(ofxCvColorImage color_frame)
+void ofxMotionDetector::update(ofxCvGrayscaleImage color_frame)
 {
 	ofxDetectorBase::update(color_frame);
 
