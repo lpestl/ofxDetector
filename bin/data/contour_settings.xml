@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<ContourDetectorSettings>
-	<threshold_contour>30</threshold_contour>
-	<minArea>20</minArea>
-	<nConsidered>10</nConsidered>
-	<bFindHoles>1</bFindHoles>
-	<bUseApproximation>1</bUseApproximation>
-	<maxArea>230400</maxArea>
-</ContourDetectorSettings>
