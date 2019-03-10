@@ -8,7 +8,7 @@ void ofxContourDetector::setup(unsigned width_image, unsigned height_image, unsi
 	working_image_.allocate(width_image, height_image);
 }
 
-void ofxContourDetector::update(ofxCvColorImage color_frame)
+void ofxContourDetector::update(ofxCvGrayscaleImage color_frame)
 {
 	ofxDetectorBase::update(color_frame);
 

@@ -7,7 +7,7 @@ void ofxDetectorBase::setup(unsigned width_image, unsigned height_image, unsigne
 	threshold_ = threshold;
 }
 
-void ofxDetectorBase::update(ofxCvColorImage color_frame)
+void ofxDetectorBase::update(ofxCvGrayscaleImage color_frame)
 {
 	gray_image_ = color_frame;
 }

@@ -28,7 +28,7 @@ public:
 	ofRectangle getSettingsRect() const;
 	void setSettingsRect(ofRectangle settings_rect);
 
-	ofxCvColorImage getResult() const;
+	ofxCvGrayscaleImage getResult() const;
 
 	void mouseDragged(int x, int y, int button);
 	void mousePressed(int x, int y, int button);
@@ -39,9 +39,8 @@ public:
 private:
 	void drawCorner(ofVec2f scale, ofParameter<glm::vec2>& corner) const;
 
-	//ofxCvGrayscaleImage		source_;
-	ofxCvColorImage			result_;
-	//std::vector<ofPoint>	setting_corners_;
+	ofxCvGrayscaleImage			result_;
+
 	short					draggedCornerIndex = -1;
 	ofRectangle				setting_rect_;
 	ofPoint					last_mouse_position_;
